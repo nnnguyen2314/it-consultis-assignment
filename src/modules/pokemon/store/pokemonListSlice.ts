@@ -5,6 +5,8 @@ import api from "@modules/pokemon/misc/api";
 export interface PokemonListState {
     pokemonList: any[];
     total: number;
+    next: string;
+    previous: string;
     loading: boolean;
     message: string;
 };
@@ -12,6 +14,8 @@ export interface PokemonListState {
 const initialState = {
     pokemonList: [],
     total: 0,
+    next: '',
+    previous: '',
     loading: false,
     message: ''
 };
@@ -38,7 +42,9 @@ export const pokemonListSlice = createSlice({
         builder.addCase(fetchPokemonList.fulfilled, (state: PokemonListState, action):void => {
             const pokemonListData = action?.payload?.data;
             state.pokemonList = pokemonListData?.results || [];
-            state.total = pokemonListData?.count || [];
+            state.total = pokemonListData?.count || 0;
+            state.next = pokemonListData?.next || '';
+            state.previous = pokemonListData?.previous || '';
             state.loading = false;
             state.message = 'Request Successfully!';
         })
@@ -64,12 +70,16 @@ export const getPokemonListState = (state: PokemonListState) => {
     const pokemonListState = get(state, stateKey, initialState);
     const pokemonList = get(pokemonListState, 'pokemonList', initialState.pokemonList || []);
     const total = get(pokemonListState, 'total', initialState.total || 0);
+    const next = get(pokemonListState, 'next', initialState.next || '');
+    const previous = get(pokemonListState, 'previous', initialState.previous || '');
     const loading = get(pokemonListState, 'loading', initialState.loading);
     const message = get(pokemonListState, 'message', initialState.message);
 
     return {
         pokemonList,
         total,
+        next,
+        previous,
         loading,
         message
     };
