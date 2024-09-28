@@ -9,24 +9,27 @@ import {Spin} from "antd";
 const PokemonContainer = () => {
     const { pokemonTypeListSelector, handleFetchPokemonTypeList } = usePokemonTypeListService();
     const { pokemonListSelector, handleFetchPokemonList, handleDoFilterPokemonList, handleDoPagingPokemonList  } = usePokemonListService();
-    const [isFiltering, setIsFiltering] = useState(false);
+    const [selectedTypeId, setSelectedTypeId] = useState<any>(null);
 
     const onPokemonTypeSelected = (type: any) => {
         if (type) {
             const typeId = type?.url.split('/')[type?.url.split('/').length - 2];
-            handleDoFilterPokemonList(typeId);
-            setIsFiltering(true);
+            setSelectedTypeId(typeId);
         } else {
-            setIsFiltering(false);
+            setSelectedTypeId(null);
         }
     }
-
     useEffect(() => {
         handleFetchPokemonTypeList();
-        if (!isFiltering) {
+    }, []);
+
+    useEffect(() => {
+        if (!selectedTypeId) {
             handleFetchPokemonList({offset: 0, limit: 48});
+        } else {
+            handleDoFilterPokemonList(selectedTypeId);
         }
-    }, [isFiltering]);
+    }, [selectedTypeId]);
 
     return (
         <div>
@@ -39,7 +42,7 @@ const PokemonContainer = () => {
                              previous={pokemonListSelector.previous}
                              total={pokemonListSelector.total}
                              handleDoPagingPokemonList={handleDoPagingPokemonList}
-                             isFiltering={isFiltering}/>
+                             isFiltering={!!selectedTypeId}/>
             </Spin>
         </div>
     )
