@@ -17,15 +17,16 @@ const PokemonContainer = () => {
             handleDoFilterPokemonList(typeId);
             setIsFiltering(true);
         } else {
-            handleFetchPokemonList({offset: 0, limit: 48});
             setIsFiltering(false);
         }
     }
 
     useEffect(() => {
         handleFetchPokemonTypeList();
-        handleFetchPokemonList({offset: 0, limit: 48});
-    }, []);
+        if (!isFiltering) {
+            handleFetchPokemonList({offset: 0, limit: 48});
+        }
+    }, [isFiltering]);
 
     return (
         <div>
