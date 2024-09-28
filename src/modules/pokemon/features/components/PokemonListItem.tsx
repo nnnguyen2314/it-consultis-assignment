@@ -6,17 +6,27 @@ import {POKEMON_IMAGE_URL} from "@modules/pokemon/misc/constants";
 const { Meta } = Card;
 
 const StyledPokemonListItemWrapper = styled(Card)`
-    background-color: transparent;
-    .ant-card-cover {
-      img {
-        width: 100px;
-        height: 100px;
-      }
+  background-color: transparent;
+  width: 110px;
+  border: none;
+
+  .ant-card-cover {
+    width: 100%;
+    margin: auto;
+    img {
+      width: 100%;
+      min-height: 110px;
     }
-    .ant-card-body {
+  }
+  .ant-card-body {
+    text-align: center;
+    padding: 24px 0;
+    .ant-card-meta-title {
       padding: 10px 0;
-      text-align: center;
+      text-overflow: unset;
+      white-space: normal;
     }
+  }
 `;
 
 interface PokemonListItemParamType {

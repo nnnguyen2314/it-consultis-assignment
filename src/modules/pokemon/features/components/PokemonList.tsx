@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Button, Col, Row, Space} from "antd";
+import {Button, Col, Flex, Row, Space} from "antd";
 import PokemonListItem from "@modules/pokemon/features/components/PokemonListItem";
 
 const StyledPokemonListPagingWrapper = styled(Row)`
@@ -44,13 +44,13 @@ const PokemonList = (pokemonListParam: PokemonListParam) => {
             <Col>
                 <Row>
                     <Col>
-                        <Space size={[8, 16]} wrap>
+                        <Flex gap="large" wrap>
                             {
                                 pokemonListParam?.pokemonList.map((pokemon: any, index: number) => {
                                     return <PokemonListItem pokemonListItemData={pokemon} key={index} />
                                 })
                             }
-                        </Space>
+                        </Flex>
                     </Col>
                 </Row>
                 {!pokemonListParam?.isFiltering && pokemonListParam?.pokemonList && (
