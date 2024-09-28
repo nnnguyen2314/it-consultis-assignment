@@ -33,6 +33,12 @@ export const doFilteringPokemonList = createAsyncThunk(
         return await api.doFilteringPokemonList(typeId);
     });
 
+export const doPagingPokemonList = createAsyncThunk(
+    'POKEMON/DO_PAGING_POKEMON_LIST',
+    async (pagingUrl: string) => {
+        return await api.fetchPagingPokemonList(pagingUrl);
+    });
+
 export const pokemonListSlice = createSlice({
     name: stateKey,
     initialState,
@@ -52,6 +58,7 @@ export const pokemonListSlice = createSlice({
             state.loading = false;
             state.message = 'Request Failed!';
         })
+
         builder.addCase(doFilteringPokemonList.pending, (state: PokemonListState, action):void => {state.loading = true})
         builder.addCase(doFilteringPokemonList.fulfilled, (state: PokemonListState, action):void => {
             const pokemonListData = action?.payload?.data;
@@ -60,6 +67,21 @@ export const pokemonListSlice = createSlice({
             state.message = 'Request Successfully!';
         })
         builder.addCase(doFilteringPokemonList.rejected, (state: PokemonListState, action):void => {
+            state.loading = false;
+            state.message = 'Request Failed!';
+        })
+
+        builder.addCase(doPagingPokemonList.pending, (state: PokemonListState, action):void => {state.loading = true})
+        builder.addCase(doPagingPokemonList.fulfilled, (state: PokemonListState, action):void => {
+            const pokemonListData = action?.payload?.data;
+            state.pokemonList = pokemonListData?.results || [];
+            state.total = pokemonListData?.count || 0;
+            state.next = pokemonListData?.next || '';
+            state.previous = pokemonListData?.previous || '';
+            state.loading = false;
+            state.message = 'Request Successfully!';
+        })
+        builder.addCase(doPagingPokemonList.rejected, (state: PokemonListState, action):void => {
             state.loading = false;
             state.message = 'Request Failed!';
         })

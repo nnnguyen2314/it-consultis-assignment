@@ -7,7 +7,7 @@ import PokemonList from "@modules/pokemon/features/components/PokemonList";
 
 const PokemonContainer = () => {
     const { pokemonTypeListSelector, handleFetchPokemonTypeList } = usePokemonTypeListService();
-    const { pokemonListSelector, handleFetchPokemonList, handleDoFilterPokemonList  } = usePokemonListService();
+    const { pokemonListSelector, handleFetchPokemonList, handleDoFilterPokemonList, handleDoPagingPokemonList  } = usePokemonListService();
 
     const onPokemonTypeSelected = (type: any, checked: boolean) => {
         console.log(type);
@@ -15,13 +15,17 @@ const PokemonContainer = () => {
 
     useEffect(() => {
         handleFetchPokemonTypeList();
-        handleFetchPokemonList({offset: 0, limit: 102});
+        handleFetchPokemonList({offset: 0, limit: 48});
     }, []);
 
     return (
         <div>
             <PokemonTypeFilter handleTypeSelected={onPokemonTypeSelected} pokemonTypeList={pokemonTypeListSelector.pokemonTypeList}/>
-            <PokemonList pokemonList={pokemonListSelector.pokemonList} limit={0} offset={0} total={pokemonListSelector.total}/>
+            <PokemonList pokemonList={pokemonListSelector.pokemonList}
+                         next={pokemonListSelector.next}
+                         previous={pokemonListSelector.previous}
+                         total={pokemonListSelector.total}
+                         handleDoPagingPokemonList={handleDoPagingPokemonList}/>
         </div>
     )
 };
