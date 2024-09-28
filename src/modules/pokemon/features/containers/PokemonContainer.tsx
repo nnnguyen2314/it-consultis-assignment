@@ -9,13 +9,16 @@ import {Spin} from "antd";
 const PokemonContainer = () => {
     const { pokemonTypeListSelector, handleFetchPokemonTypeList } = usePokemonTypeListService();
     const { pokemonListSelector, handleFetchPokemonList, handleDoFilterPokemonList, handleDoPagingPokemonList  } = usePokemonListService();
+    const [isFiltering, setIsFiltering] = useState(false);
 
     const onPokemonTypeSelected = (type: any) => {
         if (type) {
             const typeId = type?.url.split('/')[type?.url.split('/').length - 2];
             handleDoFilterPokemonList(typeId);
+            setIsFiltering(true);
         } else {
             handleFetchPokemonList({offset: 0, limit: 48});
+            setIsFiltering(false);
         }
     }
 
@@ -34,7 +37,8 @@ const PokemonContainer = () => {
                              next={pokemonListSelector.next}
                              previous={pokemonListSelector.previous}
                              total={pokemonListSelector.total}
-                             handleDoPagingPokemonList={handleDoPagingPokemonList}/>
+                             handleDoPagingPokemonList={handleDoPagingPokemonList}
+                             isFiltering={isFiltering}/>
             </Spin>
         </div>
     )

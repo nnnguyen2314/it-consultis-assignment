@@ -27,6 +27,7 @@ interface PokemonListParam {
     next: string,
     previous: string,
     handleDoPagingPokemonList: any,
+    isFiltering: boolean
 }
 
 const PokemonList = (pokemonListParam: PokemonListParam) => {
@@ -52,7 +53,7 @@ const PokemonList = (pokemonListParam: PokemonListParam) => {
                         </Space>
                     </Col>
                 </Row>
-                {pokemonListParam?.pokemonList && (
+                {!pokemonListParam?.isFiltering && pokemonListParam?.pokemonList && (
                     <StyledPokemonListPagingWrapper>
                         <Col>
                             <Space size="middle">
