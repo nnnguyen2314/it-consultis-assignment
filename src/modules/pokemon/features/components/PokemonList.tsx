@@ -52,14 +52,16 @@ const PokemonList = (pokemonListParam: PokemonListParam) => {
                         </Space>
                     </Col>
                 </Row>
-                <StyledPokemonListPagingWrapper>
-                    <Col>
-                        <Space size="middle">
-                            <Button disabled={!pokemonListParam?.previous} onClick={onFetchPrevious}>Previous</Button>
-                            <Button disabled={!pokemonListParam?.next} onClick={onFetchNext}>Next</Button>
-                        </Space>
-                    </Col>
-                </StyledPokemonListPagingWrapper>
+                {pokemonListParam?.pokemonList && (
+                    <StyledPokemonListPagingWrapper>
+                        <Col>
+                            <Space size="middle">
+                                <Button disabled={!pokemonListParam?.previous} onClick={onFetchPrevious}>Previous</Button>
+                                <Button disabled={!pokemonListParam?.next} onClick={onFetchNext}>Next</Button>
+                            </Space>
+                        </Col>
+                    </StyledPokemonListPagingWrapper>
+                )}
             </Col>
         </Row>
     )

@@ -55,18 +55,26 @@ export const pokemonListSlice = createSlice({
             state.message = 'Request Successfully!';
         })
         builder.addCase(fetchPokemonList.rejected, (state: PokemonListState, action):void => {
+            state.pokemonList = [];
             state.loading = false;
             state.message = 'Request Failed!';
         })
 
         builder.addCase(doFilteringPokemonList.pending, (state: PokemonListState, action):void => {state.loading = true})
         builder.addCase(doFilteringPokemonList.fulfilled, (state: PokemonListState, action):void => {
-            const pokemonListData = action?.payload?.data;
-            state.pokemonList = pokemonListData?.results || [];
+            const pokemonListData = action?.payload?.data?.pokemon || [];
+            if (pokemonListData && pokemonListData.length > 0) {
+                state.pokemonList = pokemonListData.map((item: any, index: number) => {
+                    return item?.pokemon;
+                })
+            } else {
+                state.pokemonList = [];
+            }
             state.loading = false;
             state.message = 'Request Successfully!';
         })
         builder.addCase(doFilteringPokemonList.rejected, (state: PokemonListState, action):void => {
+            state.pokemonList = [];
             state.loading = false;
             state.message = 'Request Failed!';
         })

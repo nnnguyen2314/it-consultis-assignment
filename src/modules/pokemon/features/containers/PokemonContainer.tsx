@@ -10,8 +10,13 @@ const PokemonContainer = () => {
     const { pokemonTypeListSelector, handleFetchPokemonTypeList } = usePokemonTypeListService();
     const { pokemonListSelector, handleFetchPokemonList, handleDoFilterPokemonList, handleDoPagingPokemonList  } = usePokemonListService();
 
-    const onPokemonTypeSelected = (type: any, checked: boolean) => {
-        console.log(type);
+    const onPokemonTypeSelected = (type: any) => {
+        if (type) {
+            const typeId = type?.url.split('/')[type?.url.split('/').length - 2];
+            handleDoFilterPokemonList(typeId);
+        } else {
+            handleFetchPokemonList({offset: 0, limit: 48});
+        }
     }
 
     useEffect(() => {

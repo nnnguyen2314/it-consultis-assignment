@@ -35,15 +35,24 @@ interface PokemonListFilterParam {
 
 const PokemonTypeFilter = (pokemonTypeListParam: PokemonListFilterParam) => {
     const { pokemonTypeList, handleTypeSelected } = pokemonTypeListParam;
-    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+    const [selectedType, setSelectedType] = useState<any>();
+
+    const onTypeSelected = (type: any, checked: boolean) => {
+        if (checked) {
+            setSelectedType(type);
+        } else {
+            setSelectedType(null);
+        }
+        onTypeSelected(type, checked);
+    }
 
     return (
         <StyledPokemonListFilterContainer gap={4} >
             <Title level={3}>Types:</Title>
             <StyledPokemonListFilterWrapper wrap gap={4} align="center">
-
                 {pokemonTypeList.map<React.ReactNode>((type: any) => (
                     <Tag.CheckableTag
+                        className={selectedType && selectedType.name === type.name ? 'selected' : ''}
                         key={type?.name}
                         checked={false}
                         onChange={(checked) => {
