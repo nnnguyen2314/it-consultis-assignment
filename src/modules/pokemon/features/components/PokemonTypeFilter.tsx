@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styled from 'styled-components';
 import {Flex, Tag, Typography, Space} from 'antd';
 
@@ -47,8 +47,11 @@ const PokemonTypeFilter = (pokemonTypeListParam: PokemonListFilterParam) => {
         } else {
             setSelectedType(null);
         }
-        handleTypeSelected(type, checked);
     }
+
+    useEffect(() => {
+        handleTypeSelected(selectedType);
+    }, [selectedType]);
 
     return (
         <StyledPokemonListFilterContainer gap={4} >
