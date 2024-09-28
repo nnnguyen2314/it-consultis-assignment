@@ -4,6 +4,7 @@ import usePokemonTypeListService from "@modules/pokemon/hooks/usePokemonTypeList
 import usePokemonListService from "@modules/pokemon/hooks/usePokemonListService";
 import PokemonTypeFilter from "@modules/pokemon/features/components/PokemonTypeFilter";
 import PokemonList from "@modules/pokemon/features/components/PokemonList";
+import {Spin} from "antd";
 
 const PokemonContainer = () => {
     const { pokemonTypeListSelector, handleFetchPokemonTypeList } = usePokemonTypeListService();
@@ -20,12 +21,16 @@ const PokemonContainer = () => {
 
     return (
         <div>
-            <PokemonTypeFilter handleTypeSelected={onPokemonTypeSelected} pokemonTypeList={pokemonTypeListSelector.pokemonTypeList}/>
-            <PokemonList pokemonList={pokemonListSelector.pokemonList}
-                         next={pokemonListSelector.next}
-                         previous={pokemonListSelector.previous}
-                         total={pokemonListSelector.total}
-                         handleDoPagingPokemonList={handleDoPagingPokemonList}/>
+            <Spin spinning={pokemonTypeListSelector.loading}>
+                <PokemonTypeFilter handleTypeSelected={onPokemonTypeSelected} pokemonTypeList={pokemonTypeListSelector.pokemonTypeList}/>
+            </Spin>
+            <Spin spinning={pokemonListSelector.loading}>
+                <PokemonList pokemonList={pokemonListSelector.pokemonList}
+                             next={pokemonListSelector.next}
+                             previous={pokemonListSelector.previous}
+                             total={pokemonListSelector.total}
+                             handleDoPagingPokemonList={handleDoPagingPokemonList}/>
+            </Spin>
         </div>
     )
 };
