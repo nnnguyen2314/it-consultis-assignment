@@ -24,6 +24,10 @@ const StyledPokemonListFilterWrapper = styled(Flex)`
         font-weight: 700;
         padding: .5rem;
         font-size: 100%;
+        &.ant-tag-checkable-checked {
+          background-color: #7f1d1d;
+          color: #ffffff;
+        }
       }
     }
 `;
@@ -43,7 +47,7 @@ const PokemonTypeFilter = (pokemonTypeListParam: PokemonListFilterParam) => {
         } else {
             setSelectedType(null);
         }
-        onTypeSelected(type, checked);
+        handleTypeSelected(type, checked);
     }
 
     return (
@@ -52,11 +56,10 @@ const PokemonTypeFilter = (pokemonTypeListParam: PokemonListFilterParam) => {
             <StyledPokemonListFilterWrapper wrap gap={4} align="center">
                 {pokemonTypeList.map<React.ReactNode>((type: any) => (
                     <Tag.CheckableTag
-                        className={selectedType && selectedType.name === type.name ? 'selected' : ''}
                         key={type?.name}
-                        checked={false}
+                        checked={!!selectedType && selectedType.name === type.name}
                         onChange={(checked) => {
-                            return handleTypeSelected(type, checked);
+                            return onTypeSelected(type, checked);
                         }}
                     >
                         {type?.name}
