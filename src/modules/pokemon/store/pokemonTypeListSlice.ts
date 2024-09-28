@@ -16,7 +16,7 @@ const initialState = {
 export const stateKey = 'pokemonTypeList';
 
 export const fetchPokemonTypeList = createAsyncThunk(
-    'POKEMON/FETCH_POKEMON_LIST',
+    'POKEMON/FETCH_POKEMON_TYPE_LIST',
     async () => {
         return await api.fetchPokemonTypeList();
     });

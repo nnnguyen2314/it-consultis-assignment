@@ -10,7 +10,7 @@ const StyledPokemonListFilterContainer = styled(Flex)`
     margin-bottom: 20px;
     .ant-typography {
       margin-top: 0;
-      width: 600px;
+      width: 150px;
       font-weight: 700;
     }
 `
